@@ -1,4 +1,7 @@
 // src/app/api/admin/settings/route.ts
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 import { NextRequest, NextResponse } from 'next/server'
 import { getSessionUser } from '@/lib/auth'
 import { db } from '@/lib/db'
