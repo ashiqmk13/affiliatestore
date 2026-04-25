@@ -35,30 +35,46 @@ export default function AddProductModal({ storeId, categories, isOpen, onClose, 
   function handleClose() { reset(); onClose() }
 
   async function scrapeUrl() {
-    if (!url) return
-    setScraping(true); setScrapeError(''); setScraped(null)
-    try {
-      const res = await fetch('/api/products/scrape', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url }),
-      })
-      const data = await res.json()
-      if (!res.ok) { setScrapeError(data.error || 'Failed to load product details'); return }
-      setScraped(data)
-      setForm(f => ({
-        ...f,
-        name: data.name || '',
-        description: data.description || '',
-        price: data.price?.toString() || '',
-        originalPrice: data.originalPrice?.toString() || '',
-        affiliateUrl: url,
-      }))
-    } catch { setScrapeError('Failed to reach the URL. Please check it and try again.') }
-    finally { setScraping(false) }
-  }
+  if (!url) return
 
-  async function saveProduct() {
+  setScraping(true)
+  setScrapeError('')
+  setScraped(null)
+
+  try {
+    const res = await fetch('/api/scrape', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url }),
+    })
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      setScrapeError(data.error || 'Failed to load product details')
+      return
+    }
+
+    const product = data.product
+
+    setScraped(product)
+
+    setForm(f => ({
+      ...f,
+      name: product.name || '',
+      description: product.description || '',
+      price: product.price?.toString() || '',
+      originalPrice: product.originalPrice?.toString() || '',
+      affiliateUrl: url,
+    }))
+
+  } catch {
+    setScrapeError('Failed to reach the URL. Please try again.')
+  } finally {
+    setScraping(false)
+  }
+}
+ async function saveProduct() {
     if (!form.name) return
     setSaving(true)
     try {
