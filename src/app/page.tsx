@@ -63,7 +63,12 @@ export default function HomePage() {
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 80])
 
   return (
-    <div className="min-h-screen bg-[#080808] text-white overflow-x-hidden">
+    <motion.div
+  initial={{ opacity: 0 }}
+  animate={{ opacity: 1 }}
+  transition={{ duration: 0.6 }}
+  className="min-h-screen bg-[#080808] text-white overflow-x-hidden"
+>
       {/* Nav */}
       <nav className="fixed top-0 inset-x-0 z-50 border-b border-white/5 bg-[#080808]/80 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
@@ -72,9 +77,9 @@ export default function HomePage() {
             <span className="text-white"> Website</span>
           </Link>
           <div className="hidden md:flex items-center gap-8 text-sm text-white/60">
-            <Link href="#features" className="hover:text-white transition-colors">Features</Link>
-            <Link href="#how" className="hover:text-white transition-colors">How it works</Link>
-            <Link href="#pricing" className="hover:text-white transition-colors">Pricing</Link>
+            <Link href="#features" className="hover:text-white transition-all duration-300 hover:scale-105">Features</Link>
+            <Link href="#how" className="hover:text-white transition-all duration-300 hover:scale-105">How it works</Link>
+            <Link href="#pricing" className="hover:text-white transition-all duration-300 hover:scale-105">Pricing</Link>
           </div>
           <div className="flex items-center gap-3">
             <Link href="/auth/login" className="text-sm text-white/60 hover:text-white transition-colors">Sign in</Link>
@@ -115,7 +120,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-            className="font-display text-6xl md:text-7xl lg:text-8xl font-800 tracking-tight leading-[0.95] mb-6"
+            className="font-display text-6xl md:text-7xl lg:text-8xl font-800 tracking-tight leading-[0.95] mb-6 drop-shadow-[0_10px_40px_rgba(0,0,0,0.8)]"
           >
             Your affiliate store,
             <br />
@@ -227,10 +232,10 @@ export default function HomePage() {
             </p>
           </FadeIn>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition duration-500 bg-gradient-to-r from-brand-600/10 via-transparent to-brand-600/10 blur-xl">
             {features.map((f, i) => (
               <FadeIn key={f.title} delay={i * 0.08}>
-                <div className="glass rounded-2xl p-7 card-hover group cursor-default h-full">
+                <div className="glass rounded-2xl p-7 card-hover group cursor-default h-full relative overflow-hidden">
                   <div className="w-11 h-11 rounded-xl bg-brand-900/40 border border-brand-700/30 flex items-center justify-center mb-5 group-hover:bg-brand-800/50 transition-colors">
                     <f.icon className="w-5 h-5 text-brand-400" />
                   </div>
@@ -356,12 +361,12 @@ export default function HomePage() {
           </div>
           <p className="text-white/30 text-sm">© {new Date().getFullYear()} Sample Website. All rights reserved.</p>
           <div className="flex gap-6 text-sm text-white/40">
-            <Link href="/privacy" className="hover:text-white transition-colors">Privacy</Link>
-            <Link href="/terms" className="hover:text-white transition-colors">Terms</Link>
-            <Link href="/contact" className="hover:text-white transition-colors">Contact</Link>
+            <Link href="/privacy" className="hover:text-white transition-all duration-300 hover:scale-105">Privacy</Link>
+            <Link href="/terms" className="hover:text-white transition-all duration-300 hover:scale-105">Terms</Link>
+            <Link href="/contact" className="hover:text-white transition-all duration-300 hover:scale-105">Contact</Link>
           </div>
         </div>
       </footer>
-    </div>
+    </motion.div>
   )
 }
